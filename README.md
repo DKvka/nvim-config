@@ -1,6 +1,6 @@
 # Neovim-config
 
-## How to use:
+## Download:
 ```shell
 git clone github.com/dkvka/nvim-config ~/.config/nvim
 ```
