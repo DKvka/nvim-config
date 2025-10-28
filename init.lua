@@ -1,5 +1,6 @@
 vim.g.mapleader = " "
 
+
 -- Set up lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -17,20 +18,23 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Load plugins
 require("lazy").setup({
-  -- Add your plugins here
     require('plugins.treesitter'),
     require('plugins.autopairs'),
     require('plugins.theme'),
     require('plugins.surround'),
     require('plugins.lsp'),
+    require('plugins.hardtime'),
+    require('plugins.precognition'),
 })
 
 
-vim.cmd("colorscheme tokyonight")
+-- Custom appearance
+vim.cmd("colorscheme rose-pine")
 vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
 vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
 
 
+-- Editor settings
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.wrap = false
@@ -39,18 +43,39 @@ vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 
 
+-- Keybindings
 vim.keymap.set('n', '<leader>e', ':Ex<CR>', { desc = 'Open :Ex file explorer' })
+vim.keymap.set('n', '<leader>h', '^', { desc = 'Move to beginning of line' })
+vim.keymap.set('n', '<leader>l', '$', { desc = 'Move to end of line' })
+vim.keymap.set('n', '<leader>j', '10j', { desc = 'Move down 10 lines' })
+vim.keymap.set('n', '<leader>k', '10k', { desc = 'Move up 10 lines' })
 
 
-vim.api.nvim_create_autocmd("BufEnter", {
+-- Highlight text when yanked
+vim.api.nvim_create_autocmd('TextYankPost', {
+    desc = 'Highlight text when yanked (copied)',
+    group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
+    callback = function()
+        vim.highlight.on_yank()
+    end,
+})
+
+
+-- Change working dir when moving in explorer
+vim.api.nvim_create_autocmd({"BufEnter", "BufWinEnter"}, {
   pattern = "*",
   callback = function()
-    if vim.bo.filetype == "netrw" then
+    local ft = vim.bo.filetype
+    if ft == "netrw" then
       vim.cmd("silent! lcd %:p:h")
+    elseif vim.fn.expand("%:p:h") ~= "" then
+      vim.cmd("silent! lcd " .. vim.fn.expand("%:p:h"))
     end
   end,
 })
 
+
+-- Setup errors and warnings when working on code files
 vim.diagnostic.config({
   virtual_text = {
     -- Different symbols for each severity
@@ -67,7 +92,7 @@ vim.diagnostic.config({
         return "● "   -- Default fallback
       end
     end,
-    spacing = 2,  -- Space between code and text
+    spacing = 4,  -- Space between code and text
   },
   signs = false,          -- Show signs in the gutter
   underline = true,      -- Underline problematic text
