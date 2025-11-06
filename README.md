@@ -7,7 +7,7 @@ git clone https://github.com/DKvka/nvim-config.git ~/.config/nvim
 ```
 ### Windows:
 ```shell
-git clone https://github.com/DKvka/nvim-config.git "C:/Users/<YOUR_USERNAME>/path/to/project"
+git clone https://github.com/DKvka/nvim-config.git "C:/Users/<YOUR_USERNAME>/AppData/Local/nvim"
 ```
 ## Maybe back up your old config first if it exists:
 ```shell
