@@ -3,11 +3,11 @@
 ## Download:
 ### Unix:
 ```shell
-git clone github.com/dkvka/nvim-config ~/.config/nvim
+git clone https://github.com/DKvka/nvim-config.git ~/.config/nvim
 ```
 ### Windows:
 ```shell
-git clone github.com/dkvka/nvim-config ~/AppData/Local/nvim
+git clone https://github.com/DKvka/nvim-config.git ~/AppData/Local/nvim
 ```
 ## Maybe back up your old config first if it exists:
 ```shell
