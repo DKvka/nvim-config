@@ -30,6 +30,8 @@ require("lazy").setup({
 
 -- Custom appearance
 vim.cmd("colorscheme rose-pine")
+
+-- # No ugly background under text
 vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
 vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
 
@@ -41,14 +43,12 @@ vim.opt.wrap = false
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
+vim.opt.scrolloff = 15
+vim.opt.colorcolumn = '100'
 
 
 -- Keybindings
-vim.keymap.set('n', '<leader>e', ':Ex<CR>', { desc = 'Open :Ex file explorer' })
-vim.keymap.set('n', '<leader>h', '^', { desc = 'Move to beginning of line' })
-vim.keymap.set('n', '<leader>l', '$', { desc = 'Move to end of line' })
-vim.keymap.set('n', '<leader>j', '10j', { desc = 'Move down 10 lines' })
-vim.keymap.set('n', '<leader>k', '10k', { desc = 'Move up 10 lines' })
+require('settings.keybinds')
 
 
 -- Highlight text when yanked
@@ -97,5 +97,20 @@ vim.diagnostic.config({
   signs = false,          -- Show signs in the gutter
   underline = true,      -- Underline problematic text
   update_in_insert = false, -- Avoid updating while typing
+})
+
+
+-- Go autoimports and fmt
+vim.api.nvim_create_autocmd("BufWritePre", {
+    pattern = "*.go",
+    callback = function()
+        -- Organize imports
+        vim.lsp.buf_request_sync(0, "workspace/executeCommand", {
+            command = "gopls.organizeImports",
+            arguments = { vim.api.nvim_buf_get_name(0) },
+        }, 1000)
+        -- Format the file
+        vim.lsp.buf.format({ async = false })
+    end,
 })
 

@@ -16,6 +16,7 @@ return {
       ensure_installed = {
         "gopls",
         "clangd",
+        "lua-language-server",
       }
     }
   }
