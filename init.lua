@@ -22,11 +22,18 @@ require("lazy").setup({
     require('plugins.autopairs'),
     require('plugins.theme'),
     require('plugins.surround'),
-    require('plugins.lsp'),
     require('plugins.hardtime'),
-    require('plugins.precognition'),
+    -- require('plugins.precognition'),
 })
 
+-- Load lsps
+vim.lsp.enable({
+    "gopls",
+    "zls",
+    "pyright",
+    "sourcekit",
+    "luals",
+})
 
 -- Custom appearance
 vim.cmd("colorscheme rose-pine")
@@ -39,7 +46,7 @@ vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
 -- Editor settings
 vim.opt.number = true
 vim.opt.relativenumber = true
-vim.opt.wrap = false
+vim.opt.wrap = true
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
@@ -92,7 +99,7 @@ vim.diagnostic.config({
         return "● "   -- Default fallback
       end
     end,
-    spacing = 4,  -- Space between code and text
+    spacing = 3,  -- Space between code and text
   },
   signs = false,          -- Show signs in the gutter
   underline = true,      -- Underline problematic text
