@@ -6,3 +6,5 @@ vim.keymap.set('n', '<leader>l', '$', { desc = 'Move to end of line' })
 vim.keymap.set('n', '<leader>j', '<C-d>', { desc = 'Scroll down' })
 vim.keymap.set('n', '<leader>k', '<C-u>', { desc = 'Scroll up' })
 
+vim.keymap.set('n', '<leader><CR>', ':!lua %<CR>', { desc = 'Run the current lua file' })
+
