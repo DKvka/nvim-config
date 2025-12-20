@@ -7,6 +7,7 @@ return {
       analyses = {
         unusedparams = true,
       },
+      completeUnimported = true,
       staticcheck = true,
     },
   },

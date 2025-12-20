@@ -46,7 +46,7 @@ vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
 -- Editor settings
 vim.opt.number = true
 vim.opt.relativenumber = true
-vim.opt.wrap = true
+vim.opt.wrap = false
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
@@ -113,7 +113,7 @@ vim.api.nvim_create_autocmd("BufWritePre", {
     callback = function()
         -- Organize imports
         vim.lsp.buf_request_sync(0, "workspace/executeCommand", {
-            command = "gopls.organizeImports",
+            command = "gopls.completeUnimported",
             arguments = { vim.api.nvim_buf_get_name(0) },
         }, 1000)
         -- Format the file
